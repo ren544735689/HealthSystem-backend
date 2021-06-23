@@ -1,9 +1,13 @@
 var express = require('express');
 var router = express.Router();
+var user = require('../controllers/userController');
+var userController = require('../controllers/userController');
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+/* GET home page. */
+router.get('/', user.getUser);
+
+router.post('/updateinfo', authJwt.verifyTokenValidation, authJwt.verifyToken, userController.updateUserInfo);
+
+router.post('/updatepassword', authJwt.verifyTokenValidation, authJwt.verifyToken, userController.updatePassword);
 
 module.exports = router;

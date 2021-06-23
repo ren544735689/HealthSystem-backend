@@ -1,0 +1,61 @@
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+flush privileges;
+
+flush table;
+
+create table user
+(id integer auto_increment not null primary key,
+name varchar(15) not null,
+idcode varchar(18) not null,
+gender varchar(6) not null,
+password varchar(45) not null
+);
+drop table user;
+
+create table foodwiki
+(
+id integer auto_increment not null primary key,
+name varchar(15) not null,
+func varchar(100),
+karloriepre100g integer,	
+proteinper100g integer,
+fatper100g integer,
+starchper100g integer
+);
+
+create table medicinewiki
+(
+id integer auto_increment not null primary key,
+name varchar(45) not null,
+func varchar(100) not null,
+sick varchar(100) not null
+);
+
+create table personalrecord
+(
+id integer auto_increment not null primary key,
+username varchar(15) not null,
+userid integer not null primary key,
+recorddate date,
+foreign key(username) references user(name),
+foreign key(userid) references user(id)
+)
+
+insert into user value(1,'test_root','20000710','male','password');
+insert into user value(2,'user1','20000623','female','123456');
+select * from user;
+delete from user where id=3;
+select * from user where id = 2;
+
+
+
+delete from libraryrecords where cardno='555666';
+delete from librarycard where cardno='555666';
+select * from books;
+select * from libraryrecords where cardno='555666' and bookno='123456' order by returndate;
+update books set storage=98 where bookno='123456';
+insert into libraryrecords value('');
+update libraryrecords set returndate= where cardno = '555666' and bookno ='123456';
+select *from libraryrecords where cardno='555666' and bookno='98765';
+update books set storage=97 where bookno='123456';
+update libraryrecords set returndate=2020-05-21 21:28:33 where cardno = '555666' and bookno ='123456'
