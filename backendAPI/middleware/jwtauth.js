@@ -25,29 +25,7 @@ var verifyTokenValidation = (req, res, next) => {
         return;
     }
     next();
-    // Blacklist.findOne({invalid_token: token}).exec((err, doc) => {
-    //     if(err) {
-    //         res.status(500).send({ status: false, message: err});
-    //         return;
-    //     }
-    //     if(doc) {
-    //         res.status(403).send({ status: false, message: 'Token invalid' });
-    //         return;
-    //     }
-    //     next();
-    // });
 }
-
-// var getPermission = (req, res, next) => {
-//     User.findById(req.idinToken).exec((err, user) => {
-//         if(err) {
-//             res.status(500).send({ status: false, message: err});
-//             return;
-//         }
-//         req.permissionInToken = user.type;
-//         next();
-//     });
-// }
 
 const authJwt = {
     verifyToken,

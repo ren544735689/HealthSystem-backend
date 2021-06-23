@@ -1,5 +1,7 @@
 var dbconfig = require('../util/DBConfig');
 
+var token_key = 'se';
+
 // get user
 var getUser=(req,res)=>{
     var sql="select * from user";
@@ -19,23 +21,65 @@ var getUser=(req,res)=>{
 }
 
 // get certain user
-var getCertainUser=(res,req)=>{
+var getCertainUser=(req,res)=>{
     let {id} = req.id;
     var sql = 'select * from user where id=?';
     var sqlArr = [id];
     var callBack = (err,data)=>{
         if(err){
-          console.log('err');
+          res.status(500).send({ status: false, message: err });
         }
         else{
-          res.send({
-            'list': data
-          })
+          if(!data){
+            res.send({
+                status: false,
+                message: "user not found!" });
+            return;
+          }
+          else{
+            res.send({
+              'list': data
+            })
+          }
         }
     }
 
     dbconfig.sqlConnect(sql,sqlArr,callBack);
 }
+
+var login=(req, res) => {
+    let id = req.body.id;
+    let password = req.body.password;
+    var sql = 'select * from user where id=? and password=?';
+    var sqlArr = [id,password];
+    var callBack = (err,data)=>{
+        if(err){
+            res.status(500).send({ status: false, message: err });
+        }
+        else{
+            var token = jwt.sign({id: res.query.id}, tokent_key, {
+                expiresIn: 86400 // 24 hours
+            });
+            var resObj = {
+                status: true,
+                message: "login success",
+                token: token,
+                userData: {
+                    userId: data,
+                    userName: user.username,
+                    userPermission: user.type,
+                    userStatus: user.status,
+                    userInfo: {
+                        xingbie: user.gender
+                    }
+                }
+            };
+            res.status(200).send(resObj);
+        }
+    }
+
+    dbconfig.sqlConnect(sql,sqlArr,callBack);
+};
 
 var updateUserInfo = (req, res) => {
   var reqInfo = req.body.userInfo;
@@ -103,7 +147,84 @@ var updateUserInfo = (req, res) => {
 }
 
 
+// 模拟验证码登录
+
+
+function rand(min,max){
+  return Math.floor(Math.random()*(max-min))+min;
+}
+
+var validatePhoneCode = [];
+
+// check if send personal code message
+let sendCodeP = (phone)=>{
+  for(var item of validatePhoneCode){
+    id(phone == item.phone){
+      return true;
+    }
+  }
+  return false;
+}
+
+// check if personal code message true
+let findCodeAndPhone = (phone,code)=>{
+  for(var item of validatePhoneCode){
+    if(phone==item.phone&&code=item.code){
+      return 'login'
+    }
+  }
+  return 'error'
+}
+
+// send personal code message
+var sendCode=(req,res)=>{
+  let phone = req.query.phone;
+  if(sendCodeP(phone)){
+    res.send({
+      'code':400,
+      'msg':'personal code message has been sent, please wait!'
+    })
+  }
+  let code = rand(1000,9999);
+  validatePhoneCode.push({
+    'phone':phone,
+    'code':code
+  })
+  console.log(validatePhoneCode)
+  res.send({
+    'code':200,
+    'msg':'successfully send message!'
+  })
+  console.log(code)
+}
+
+//personal code message login
+codePhoneLogin = (res,req)=>{
+  let{phone,code}=req.query;
+  if(sendCodeP(phone)){
+    let state = findCodeAndPhone(phone,code);
+    if(statue=='login'){
+      res.send({
+        'code':200,
+        'msg':'login success!'
+      })
+    }else if(statue=='error'){
+      res.send({
+        'code':200,
+        'msg':'login failed! code error!'
+      })
+    }
+  }else{
+    res.send({
+      'code':400,
+      'msg':'sorry, this phone has not been sent personal code message.'
+    })
+  }
+}
+
 module.exports = {
     getUser,
-    getCertainUser
+    getCertainUser,
+    sendCode,
+    codePhoneLogin
 }
