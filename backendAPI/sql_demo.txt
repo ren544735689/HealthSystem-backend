@@ -33,13 +33,16 @@ sick varchar(100) not null
 
 create table personalrecord
 (
-id integer auto_increment not null primary key,
-username varchar(15) not null,
-userid integer not null primary key,
+rid integer auto_increment not null primary key,
+uid integer,
 recorddate date,
-foreign key(username) references user(name),
-foreign key(userid) references user(id)
+recordtime time,
+reason varchar(30),
+cost DECIMAL(10,2),
+diagnosis varchar(100),
+foreign key(uid) references user(id)
 )
+
 
 insert into user value(1,'test_root','20000710','male','password');
 insert into user value(2,'user1','20000623','female','123456');

@@ -5,9 +5,16 @@ var userController = require('../controllers/userController');
 
 /* GET home page. */
 router.get('/', user.getUser);
+router.post('/login',user.UserLogin);
 
-router.post('/sendCode',user.sendCode)
-router.post('/codePhonsLogin',user.codePhoneLogin)
+
+
+router.get('/gettest', function(req, res) {
+    res.send('get test');
+  });
+router.post('/posttest', function(req, res) {
+    res.send('post test');
+});
 
 
 module.exports = router;
