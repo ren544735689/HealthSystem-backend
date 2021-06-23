@@ -15,7 +15,7 @@ module.exports = {
     sqlConnect:function(sql,sqlArr,callBack){
         var pool = mysql.createPool(this.config)
         pool.getConnection((err,conn)=>{
-            console.log('in sqlConnection pool...');
+            //console.log('in sqlConnection pool...');
             if(err){
                 console.log(err);
                 return;

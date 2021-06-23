@@ -159,7 +159,7 @@ var validatePhoneCode = [];
 // check if send personal code message
 let sendCodeP = (phone)=>{
   for(var item of validatePhoneCode){
-    id(phone == item.phone){
+    if(phone == item.phone){
       return true;
     }
   }
@@ -169,7 +169,7 @@ let sendCodeP = (phone)=>{
 // check if personal code message true
 let findCodeAndPhone = (phone,code)=>{
   for(var item of validatePhoneCode){
-    if(phone==item.phone&&code=item.code){
+    if(phone==item.phone&&code==item.code){
       return 'login'
     }
   }

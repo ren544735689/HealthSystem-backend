@@ -6,8 +6,8 @@ var userController = require('../controllers/userController');
 /* GET home page. */
 router.get('/', user.getUser);
 
-router.post('/updateinfo', authJwt.verifyTokenValidation, authJwt.verifyToken, userController.updateUserInfo);
+router.post('/sendCode',user.sendCode)
+router.post('/codePhonsLogin',user.codePhoneLogin)
 
-router.post('/updatepassword', authJwt.verifyTokenValidation, authJwt.verifyToken, userController.updatePassword);
 
 module.exports = router;
