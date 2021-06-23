@@ -1,8 +1,8 @@
 var dbconfig = require('../util/DBConfig');
 
-// get user
-getUser=(req,res)=>{
-    var sql="select * from user";
+// get food
+getFood=(req,res)=>{
+    var sql="select * from foodwiki";
     var sqlArr = [];
     var callBack = (err,data)=>{
       if(err){
@@ -18,10 +18,10 @@ getUser=(req,res)=>{
     dbconfig.sqlConnect(sql,sqlArr,callBack);
 }
 
-// get certain user
-getCertainUser=(res,req)=>{
+// get certain food
+getCertainFood=(res,req)=>{
     let {id} = req.id;
-    var sql = 'select * from user where id=?';
+    var sql = 'select * from foodwiki where id=?';
     var sqlArr = [id];
     var callBack = (err,data)=>{
         if(err){
@@ -38,6 +38,6 @@ getCertainUser=(res,req)=>{
 }
 
 module.exports = {
-    getUser,
-    getCertainUser
+    getFood,
+    getCertainFood
 }
