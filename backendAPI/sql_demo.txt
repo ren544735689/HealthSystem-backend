@@ -3,14 +3,24 @@ flush privileges;
 
 flush table;
 
+select * from user;
+
 create table user
 (id integer auto_increment not null primary key,
-name varchar(15) not null,
+name varchar(15) unique not null,
 idcode varchar(18) not null,
 gender varchar(6) not null,
 password varchar(45) not null
 );
 drop table user;
+
+insert into user value(0,'ren','20000710','male','password');
+insert into user value(1,'test_root','20000710','male','password');
+insert into user value(2,'user1','20000623','female','123456');
+select * from user;
+delete from user where id=3;
+select * from user where id = 2;
+select * from user;
 
 create table foodwiki
 (
@@ -22,6 +32,13 @@ proteinper100g integer,
 fatper100g integer,
 starchper100g integer
 );
+drop table foodwiki;
+
+insert into foodwiki value(1000,'test','test_func','2','5','6','7');
+insert into foodwiki value(1,'test','test_func','1','1','1','1');
+insert into foodwiki value(2,'apple','happy','2','4','6','8');
+select * from foodwiki;
+
 
 create table medicinewiki
 (
@@ -30,6 +47,9 @@ name varchar(45) not null,
 func varchar(100) not null,
 sick varchar(100) not null
 );
+
+insert into medicinewiki value(0,'test','test_func','test_sick');
+select * from medicinewiki;
 
 create table personalrecord
 (
@@ -41,16 +61,46 @@ reason varchar(30),
 cost DECIMAL(10,2),
 diagnosis varchar(100),
 foreign key(uid) references user(id)
-)
-
-
-insert into user value(1,'test_root','20000710','male','password');
-insert into user value(2,'user1','20000623','female','123456');
+);
+insert into personalrecord values ('0','1','2020-07-12','10:12:30','sick','14.2','health'); 
+insert into personalrecord values ('0','1','2020-08-12','11:12:30','headache','14.2','health'); 
+insert into personalrecord values ('0','1','2020-09-13','11:12:30','headache','14.2','health'); 
+insert into personalrecord values ('0','2','2020-07-14','11:12:30','toothache','14.2','health'); 
+insert into personalrecord values ('0','2','2020-08-12','11:12:30','toothache','14.2','health'); 
+insert into personalrecord values ('0','2','2020-09-12','11:12:30','cold','14.2','health'); 
+insert into personalrecord values ('0','2','2020-10-12','11:12:30','cold','14.2','health'); 
+insert into personalrecord values ('0','3','2020-07-17','12:12:30','sick','14.2','health'); 
+insert into personalrecord values ('0','4','2020-07-17','13:12:30','sick','14.2','health'); 
+insert into personalrecord values ('0','5','2020-07-18','14:12:30','sick','14.2','health'); 
+insert into personalrecord values ('0','6','2020-07-19','15:12:30','sick','14.2','health'); 
+insert into personalrecord values ('0','7','2020-07-21','16:12:30','sick','14.2','health'); 
+insert into personalrecord values ('0','8','2020-07-22','17:12:30','sick','14.2','health');
+insert into personalrecord value (0,5,"2008-06-24","16:14:14","test_reason","105.2","test_diagnosis");
+select * from personalrecord;
 select * from user;
-delete from user where id=3;
-select * from user where id = 2;
 
-
+create table userdata
+(
+uid integer,
+userdatatime  datetime,
+weight DECIMAL(5,1),
+height DECIMAL(5,1),
+bloodtype char,
+diastolic_pressure integer,
+systolic_pressure integer,
+rest_heart_rate integer,
+blood_sugar_empty DECIMAL(5,1),
+blood_sugar_full DECIMAL(5,1),
+blood_fat_TC DECIMAL(5,1),
+blood_fat_TG DECIMAL(5,1),
+blood_fat_LDL_C DECIMAL(5,1),
+blood_fat_HDL_C DECIMAL(5,1),
+vision_left DECIMAL(5,1),
+vision_right DECIMAL(5,1),
+foreign key(uid) references user(id),
+primary key(uid,usrdatatime)
+);
+select * from user;
 
 delete from libraryrecords where cardno='555666';
 delete from librarycard where cardno='555666';

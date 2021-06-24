@@ -91,7 +91,7 @@ var addRecord = (req, res) => {
   let cost = req.body.cost;
   let diagnosis = req.body.diagnosis;
   var sql = 'insert into personalrecord values(?,?,?,?,?,?,?)';
-  var sqlArr = [rid,uid, date, time, reason, cost, diagnosis];
+  var sqlArr = [rid, uid, date, time, reason, cost, diagnosis];
   var callBack = (err, data) => {
     if (err) {
       res.send({
@@ -132,8 +132,62 @@ var deleteRecord = (req, res) => {
   dbconfig.sqlConnect(sql, sqlArr, callBack);
 }
 
+var count2Record = (req, res) => {
+  let uid = req.body.uid;
+  let searchtime = req.body.time;
+  var sql = 'select * from personalrecord where uid=? and recorddate>?';
+  var sqlArr = [uid, searchtime];
+  var callBack = (err, data) => {
+    if (err) {
+      res.send({
+        state: false,
+        message: err
+      });
+    }
+    else {
+      var num = data.length;
+      var totalcost = 0;
+      for (let i = 0; i < num; i++) {
+        totalcost += data[i].cost;
+      }
+      res.send({
+        "states": true,
+        "number": num,
+        "allcost": totalcost
+      })
+    }
+  }
 
+  dbconfig.sqlConnect(sql, sqlArr, callBack);
+}
 
+var countAllRecord = (req, res) => {
+  var uid = req.body.uid;
+  var sql = 'select * from personalrecord where uid=?';
+  var sqlArr = [uid];
+  var callBack = (err, data) => {
+    if (err) {
+      res.send({
+        state: false,
+        message: err
+      });
+    }
+    else {
+      var num = data.length;
+      var totalcost = 0;
+      for (let i = 0; i < num; i++) {
+        totalcost += data[i].cost;
+      }
+      res.send({
+        "states": true,
+        "number": num,
+        "allcost": totalcost
+      })
+    }
+  }
+
+  dbconfig.sqlConnect(sql, sqlArr, callBack);
+}
 
 
 
@@ -142,5 +196,7 @@ module.exports = {
   getCertainRecordbyrid,
   getCertainRecordbyuid,
   addRecord,
-  deleteRecord
+  deleteRecord,
+  count2Record,
+  countAllRecord
 }
