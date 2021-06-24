@@ -20,7 +20,7 @@ var getMedicine=(req,res)=>{
 
 // get certain medicine
 var getCertainMedicinebyid=(req,res)=>{
-    let {id} = req.body.id;
+    let id = req.body.id;
     var sql = 'select * from medicinewiki where id=?';
     var sqlArr = [id];
     var callBack = (err,data)=>{
@@ -51,7 +51,7 @@ var getCertainMedicinebyid=(req,res)=>{
 
 // get certain medicine by name
 var getCertainMedicinebyname=(req,res)=>{
-  let {name} = req.body.name;
+  let name = req.body.name;
   var sql = 'select * from medicinewiki where name=?';
   var sqlArr = [name];
   var callBack = (err,data)=>{
@@ -82,7 +82,7 @@ var getCertainMedicinebyname=(req,res)=>{
 
 // get certain medicine by sick
 var getCertainMedicinebysick=(req,res)=>{
-  let {sick} = req.body.sick;
+  let sick = req.body.sick;
   var sql = 'select * from medicinewiki where sick=?';
   var sqlArr = [sick];
   var callBack = (err,data)=>{

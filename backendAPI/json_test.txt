@@ -1,0 +1,17 @@
+user：：test：
+{
+    "id":"4",
+    "name":"test4",
+    "idcode":"333",
+    "gender":"male",
+    "password":"password"
+}
+
+
+medicine：：test：
+{
+    "id":"2",
+    "name":"test2",
+    "sick":"test_sick2"
+}
+

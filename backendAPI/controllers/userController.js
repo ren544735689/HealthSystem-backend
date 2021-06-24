@@ -48,7 +48,7 @@ var getCertainUser = (req, res) => {
 }
 
 var UserLogin = (req, res) => {
-  let name = req.body.name;
+  let name = req.body.username;
   let password = req.body.password;
   var sql = 'select * from user where name=? and password=?';
   var sqlArr = [name, password];
@@ -140,11 +140,8 @@ var UserRegister = (req, res) => {
     }
   }
 
-
   console.log('in UserRegister...');
   dbconfig.sqlConnect(sql_check, sqlArr_check, callBackCheck);
-
-
 }
 
 module.exports = {

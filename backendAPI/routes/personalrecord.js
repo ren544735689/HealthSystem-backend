@@ -1,8 +1,12 @@
 var express = require('express');
 var router = express.Router();
-var pr = require('../controllers/personalrecordcontroller');
+var personalrecord = require('../controllers/personalrecordcontroller');
 
 /* GET home page. */
-router.get('/', pr.getFood);
+router.get('/', personalrecord.getRecord);
+router.post('/getpersonalrecordbyrid',personalrecord.getCertainRecordbyrid);
+router.post('/getpersonalrecordbyuid',personalrecord.getCertainRecordbyuid);
+router.post('/addrecord',personalrecord.addRecord);
+router.post('/deleterecord',personalrecord.deleteRecord);
 
 module.exports = router;

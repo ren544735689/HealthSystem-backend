@@ -3,8 +3,9 @@ var router = express.Router();
 var medicine = require('../controllers/medicinecontroller');
 
 /* GET home page. */
-router.get('/', medicine.getFood);
-router.get('/getmedicinebyid',food.getCertainMedicinebyid);
-router.get('/getmedicinebyname',food.getCertainMedicinebyname);
+router.get('/', medicine.getMedicine);
+router.post('/getmedicinebyid',medicine.getCertainMedicinebyid);
+router.post('/getmedicinebyname',medicine.getCertainMedicinebyname);
+router.post('/getmedicinebysick',medicine.getCertainMedicinebysick);
 
 module.exports = router;
