@@ -3,6 +3,9 @@ var router = express.Router();
 var user = require('../controllers/userController');
 
 /* GET home page. */
-router.get('/', user.getUser);
+router.get('/', function(req, res) {
+    res.json({message: "Welcome to express"})
+});
+
 
 module.exports = router;
